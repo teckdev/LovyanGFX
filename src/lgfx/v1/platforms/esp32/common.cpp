@@ -27,7 +27,8 @@ Contributors:
 #include <freertos/FreeRTOS.h>
 #include <freertos/semphr.h>
 
-#include <driver/i2c.h>
+// #include <driver/i2c.h>
+#include <hal/i2c_types.h>
 #include <driver/spi_common.h>
 #include <driver/spi_master.h>
 #include <driver/rtc_io.h>
@@ -921,7 +922,7 @@ namespace lgfx
       auto mod = getPeriphModule(i2c_port);
       periph_module_reset(mod);
 #endif
-      i2c_set_pin((i2c_port_t)i2c_port, sda_io, scl_io, gpio_pullup_t::GPIO_PULLUP_ENABLE, gpio_pullup_t::GPIO_PULLUP_ENABLE, I2C_MODE_MASTER);
+      #i2c_set_pin((i2c_port_t)i2c_port, sda_io, scl_io, gpio_pullup_t::GPIO_PULLUP_ENABLE, gpio_pullup_t::GPIO_PULLUP_ENABLE, I2C_MODE_MASTER);
 #else
       auto mod = getPeriphModule(i2c_port);
       periph_module_enable(mod);
@@ -933,7 +934,7 @@ namespace lgfx
       gpio_num_t sda_io = i2c_context[i2c_port].pin_sda;
       gpio_num_t scl_io = i2c_context[i2c_port].pin_scl;
       periph_module_reset(mod);
-      i2c_set_pin((i2c_port_t)i2c_port, sda_io, scl_io, gpio_pullup_t::GPIO_PULLUP_ENABLE, gpio_pullup_t::GPIO_PULLUP_ENABLE, I2C_MODE_MASTER);
+      #i2c_set_pin((i2c_port_t)i2c_port, sda_io, scl_io, gpio_pullup_t::GPIO_PULLUP_ENABLE, gpio_pullup_t::GPIO_PULLUP_ENABLE, I2C_MODE_MASTER);
 #endif
     }
 
@@ -1331,7 +1332,7 @@ namespace lgfx
       }
       i2c_context[i2c_port].save_reg(dev);
 
-      i2c_set_pin((i2c_port_t)i2c_port, i2c_context[i2c_port].pin_sda, i2c_context[i2c_port].pin_scl, gpio_pullup_t::GPIO_PULLUP_ENABLE, gpio_pullup_t::GPIO_PULLUP_ENABLE, I2C_MODE_MASTER);
+      #i2c_set_pin((i2c_port_t)i2c_port, i2c_context[i2c_port].pin_sda, i2c_context[i2c_port].pin_scl, gpio_pullup_t::GPIO_PULLUP_ENABLE, gpio_pullup_t::GPIO_PULLUP_ENABLE, I2C_MODE_MASTER);
 
 #if SOC_I2C_SUPPORT_HW_FSM_RST
       dev->ctr.fsm_rst = 1;
